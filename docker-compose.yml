@@ -1,0 +1,30 @@
+version: "3.9"
+
+services:
+  postgres:
+    image: postgres:16-alpine
+    container_name: relief-grid-postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: relief_grid
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    ports:
+      - "5432:5432"
+    volumes:
+      - relief_grid_postgres:/var/lib/postgresql/data
+
+  pgadmin:
+    image: dpage/pgadmin4:8
+    container_name: relief-grid-pgadmin
+    restart: unless-stopped
+    environment:
+      PGADMIN_DEFAULT_EMAIL: admin@reliefgrid.local
+      PGADMIN_DEFAULT_PASSWORD: admin123
+    ports:
+      - "5050:80"
+    depends_on:
+      - postgres
+
+volumes:
+  relief_grid_postgres:

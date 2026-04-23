@@ -1,0 +1,16 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.reportRouter = void 0;
+const express_1 = require("express");
+const client_1 = require("@prisma/client");
+const report_controller_1 = require("../controllers/report.controller");
+const async_handler_1 = require("../utils/async-handler");
+const auth_1 = require("../middleware/auth");
+const upload_1 = require("../middleware/upload");
+const validate_1 = require("../middleware/validate");
+const report_validator_1 = require("../validators/report.validator");
+exports.reportRouter = (0, express_1.Router)();
+exports.reportRouter.use(auth_1.requireAuth, (0, auth_1.requireRole)(client_1.Role.USER));
+exports.reportRouter.post("/", (0, upload_1.attachSingleUpload)("media"), (0, validate_1.validate)(report_validator_1.createReportSchema), (0, async_handler_1.asyncHandler)(report_controller_1.reportController.create));
+exports.reportRouter.get("/my", (0, async_handler_1.asyncHandler)(report_controller_1.reportController.listMine));
+exports.reportRouter.get("/:id", (0, async_handler_1.asyncHandler)(report_controller_1.reportController.getOne));

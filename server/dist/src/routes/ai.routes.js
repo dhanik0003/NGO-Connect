@@ -1,0 +1,15 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.aiRouter = void 0;
+const express_1 = require("express");
+const ai_controller_1 = require("../controllers/ai.controller");
+const async_handler_1 = require("../utils/async-handler");
+const auth_1 = require("../middleware/auth");
+exports.aiRouter = (0, express_1.Router)();
+exports.aiRouter.use(auth_1.requireAuth);
+exports.aiRouter.get("/status", (0, async_handler_1.asyncHandler)(ai_controller_1.aiController.status));
+exports.aiRouter.post("/classify-domain", (0, async_handler_1.asyncHandler)(ai_controller_1.aiController.classifyDomain));
+exports.aiRouter.post("/score-priority", (0, async_handler_1.asyncHandler)(ai_controller_1.aiController.scorePriority));
+exports.aiRouter.post("/match-ngo", (0, async_handler_1.asyncHandler)(ai_controller_1.aiController.matchNgo));
+exports.aiRouter.post("/match-volunteer", (0, async_handler_1.asyncHandler)(ai_controller_1.aiController.matchVolunteer));
+exports.aiRouter.post("/check-duplicate", (0, async_handler_1.asyncHandler)(ai_controller_1.aiController.checkDuplicate));

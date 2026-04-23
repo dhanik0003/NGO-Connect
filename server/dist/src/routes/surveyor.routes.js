@@ -1,0 +1,17 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.surveyorRouter = void 0;
+const express_1 = require("express");
+const client_1 = require("@prisma/client");
+const surveyor_controller_1 = require("../controllers/surveyor.controller");
+const async_handler_1 = require("../utils/async-handler");
+const auth_1 = require("../middleware/auth");
+const upload_1 = require("../middleware/upload");
+const validate_1 = require("../middleware/validate");
+const report_validator_1 = require("../validators/report.validator");
+exports.surveyorRouter = (0, express_1.Router)();
+exports.surveyorRouter.use(auth_1.requireAuth, (0, auth_1.requireRole)(client_1.Role.SURVEYOR));
+exports.surveyorRouter.post("/reports", (0, upload_1.attachSingleUpload)("media"), (0, validate_1.validate)(report_validator_1.surveyorReportSchema), (0, async_handler_1.asyncHandler)(surveyor_controller_1.surveyorController.createReport));
+exports.surveyorRouter.get("/reports", (0, async_handler_1.asyncHandler)(surveyor_controller_1.surveyorController.listReports));
+exports.surveyorRouter.get("/dashboard", (0, async_handler_1.asyncHandler)(surveyor_controller_1.surveyorController.dashboard));
+exports.surveyorRouter.get("/region", (0, async_handler_1.asyncHandler)(surveyor_controller_1.surveyorController.region));
