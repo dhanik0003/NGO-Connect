@@ -1,4 +1,4 @@
-# Relief Grid
+# NGO-Connect
 
 Relief Grid is a hackathon-ready NGO dispatch and volunteer coordination platform built around one centralized PostgreSQL database, AI-assisted routing, and auditable report-to-closure workflows.
 
